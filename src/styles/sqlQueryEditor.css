@@ -1,0 +1,164 @@
+/*
+ * Plain stylesheet so stylis-plugin-rtl cannot flip these rules.
+ * The query box matches the SSMS editor: LTR text with colored SQL tokens.
+ */
+.sql-query-field {
+  width: 100%;
+}
+
+.sql-query-shell {
+  position: relative;
+  margin-top: 6px;
+  border-radius: 4px;
+  background: var(--sql-bg);
+}
+
+.sql-query-surface {
+  display: grid;
+  direction: ltr !important;
+  height: calc(24px + (var(--sql-rows, 8) * 19.5px));
+  overflow: hidden;
+  border-radius: 4px;
+  background: var(--sql-bg);
+}
+
+.sql-query-highlight,
+.sql-query-input {
+  grid-area: 1 / 1;
+  box-sizing: border-box;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 12px 14px;
+  border: 0;
+  direction: ltr !important;
+  text-align: left !important;
+  unicode-bidi: isolate !important;
+  font-family: Consolas, 'Cascadia Mono', 'Cascadia Code', 'Courier New', monospace !important;
+  font-size: 13px !important;
+  line-height: 19.5px !important;
+  letter-spacing: normal !important;
+  white-space: pre !important;
+  tab-size: 4;
+  overflow: auto;
+}
+
+.sql-query-highlight {
+  z-index: 0;
+  color: var(--sql-text);
+  pointer-events: none;
+  user-select: none;
+  scrollbar-width: none;
+}
+
+.sql-query-highlight::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+}
+
+.sql-query-input {
+  z-index: 1;
+  color: transparent;
+  caret-color: var(--sql-text);
+  background: transparent;
+  resize: none;
+  outline: none;
+}
+
+.sql-query-input::selection {
+  color: transparent;
+  background: rgba(0, 120, 215, 0.28);
+}
+
+.sql-query-shell fieldset {
+  position: absolute;
+  inset: -5px 0 0;
+  margin: 0;
+  padding: 0 8px;
+  border: 1px solid var(--sql-border);
+  border-radius: inherit;
+  pointer-events: none;
+  min-inline-size: 0;
+}
+
+.sql-query-shell fieldset legend {
+  float: unset;
+  width: auto;
+  height: 11px;
+  padding: 0;
+  font-size: 0.75rem;
+  line-height: 11px;
+  visibility: hidden;
+}
+
+.sql-query-shell fieldset legend label {
+  display: inline-block;
+  padding: 0 5px;
+  visibility: visible;
+  color: var(--sql-label);
+  pointer-events: auto;
+  cursor: text;
+}
+
+.sql-query-shell:focus-within fieldset {
+  border-color: var(--sql-focus);
+  border-width: 2px;
+  inset: -6px 0 -1px;
+}
+
+.sql-query-shell:focus-within fieldset legend label {
+  color: var(--sql-focus);
+}
+
+.sql-query-shell[data-error='true'] fieldset {
+  border-color: var(--sql-error);
+}
+
+.sql-query-shell[data-error='true'] fieldset legend label,
+.sql-query-shell[data-error='true']:focus-within fieldset legend label {
+  color: var(--sql-error);
+}
+
+.sql-query-shell[data-disabled='true'] {
+  opacity: 0.72;
+}
+
+.sql-token--keyword {
+  color: #0000ff;
+}
+
+.sql-token--function {
+  color: #af00db;
+}
+
+.sql-token--string {
+  color: #a31515;
+}
+
+.sql-token--comment {
+  color: #008000;
+}
+
+.sql-token--number {
+  color: #098658;
+}
+
+.sql-query-shell[data-sql-theme='dark'] .sql-token--keyword {
+  color: #569cd6;
+}
+
+.sql-query-shell[data-sql-theme='dark'] .sql-token--function {
+  color: #dcdcaa;
+}
+
+.sql-query-shell[data-sql-theme='dark'] .sql-token--string {
+  color: #ce9178;
+}
+
+.sql-query-shell[data-sql-theme='dark'] .sql-token--comment {
+  color: #6a9955;
+}
+
+.sql-query-shell[data-sql-theme='dark'] .sql-token--number {
+  color: #b5cea8;
+}

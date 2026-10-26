@@ -1,0 +1,205 @@
+/* Dashboard Designer Grid Styles */
+
+/* Grid background for edit mode - create proper square grid cells */
+.designer-grid {
+  background-color: #f5f5f5;
+  background-image: 
+    linear-gradient(to right, rgba(0, 0, 0, 0.08) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(0, 0, 0, 0.08) 1px, transparent 1px);
+  background-size: var(--grid-cell-w, 78px) var(--grid-cell-h, 78px);
+  background-position: 0 0;
+  position: relative;
+}
+
+/* Add visible grid cell boundaries */
+.designer-grid::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: 
+    linear-gradient(to right, rgba(0, 0, 0, 0.05) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(0, 0, 0, 0.05) 1px, transparent 1px);
+  background-size: var(--grid-cell-w, 78px) var(--grid-cell-h, 78px);
+  background-position: 0 0;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* View mode - no grid background */
+.view-grid {
+  background-image: none;
+  background-color: transparent;
+}
+
+.view-grid::before {
+  display: none;
+}
+
+/* Widget styling in edit mode */
+.designer-grid .react-grid-item {
+  transition: none;
+  border-radius: 4px;
+  z-index: 1;
+}
+
+.designer-grid .react-grid-item:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* Drag handle styling */
+.widget-drag-handle {
+  cursor: grab;
+  transition: cursor 0.1s ease;
+  /* Make drag handle area larger for easier grabbing */
+  min-height: 24px;
+  min-width: 24px;
+}
+
+.widget-drag-handle:active {
+  cursor: grabbing;
+}
+
+/* Resize handles - more visible and easier to grab */
+.react-grid-item .react-resizable-handle {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  bottom: 0;
+  right: 0;
+  background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 10 10"><path d="M0 10 L10 10 L10 0" fill="rgba(25, 118, 210, 0.4)"/></svg>') no-repeat;
+  background-position: bottom right;
+  background-repeat: no-repeat;
+  background-size: 10px 10px;
+  z-index: 1000;
+  opacity: 0.7;
+  transition: opacity 0.2s ease;
+}
+
+.react-grid-item:hover .react-resizable-handle {
+  opacity: 1;
+}
+
+.react-grid-item .react-resizable-handle.se {
+  cursor: se-resize;
+}
+
+.react-grid-item .react-resizable-handle.e {
+  cursor: e-resize;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 10 10"><path d="M0 5 L10 5" stroke="rgba(25, 118, 210, 0.4)" stroke-width="2"/></svg>') no-repeat;
+  background-position: center;
+}
+
+.react-grid-item .react-resizable-handle.s {
+  cursor: s-resize;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 10 10"><path d="M6 0 L6 12" stroke="rgba(25, 118, 210, 0.4)" stroke-width="2"/></svg>') no-repeat;
+  background-position: center;
+}
+
+.react-grid-item .react-resizable-handle.w {
+  cursor: w-resize;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 10 10"><path d="M0 5 L10 5" stroke="rgba(25, 118, 210, 0.4)" stroke-width="2"/></svg>') no-repeat;
+  background-position: center;
+}
+
+.react-grid-item .react-resizable-handle.sw {
+  cursor: sw-resize;
+  left: 0;
+  bottom: 0;
+  background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 10 10"><path d="M10 0 L0 10" stroke="rgba(25, 118, 210, 0.4)" stroke-width="2"/></svg>') no-repeat;
+  background-position: bottom left;
+}
+
+/* Selected widget highlight */
+.designer-grid .react-grid-item.react-grid-placeholder {
+  background: rgba(25, 118, 210, 0.1);
+  border: 2px dashed rgba(25, 118, 210, 0.5);
+  border-radius: 4px;
+}
+
+/* Smooth transitions for better UX */
+.designer-grid .react-grid-item.react-grid-item-dragging {
+  z-index: 100;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+  cursor: grabbing;
+}
+
+.designer-grid .react-grid-item.react-grid-item-resizing {
+  z-index: 100;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+}
+
+/*
+ * Grid coordinates are physical left-to-right. Emotion's RTL plugin rewrites
+ * direction:ltr in sx back to rtl, and absolute items then anchor on the right
+ * edge while translate() still moves them right — widgets pile up and clip.
+ * These rules live in a plain stylesheet so they are not flipped.
+ */
+.widget-grid-host,
+.designer-grid,
+.view-grid {
+  direction: ltr !important;
+}
+
+.designer-grid .react-grid-item,
+.view-grid .react-grid-item {
+  direction: ltr !important;
+  left: 0 !important;
+  top: 0 !important;
+  right: auto !important;
+}
+
+.designer-grid .react-grid-item > div,
+.view-grid .react-grid-item > div {
+  direction: ltr !important;
+}
+
+.designer-grid .react-grid-item > div > *,
+.view-grid .react-grid-item > div > * {
+  direction: rtl !important;
+}
+
+/* Widget selection ring effect */
+[data-chrome-mode="edit"][data-selected="true"] {
+  animation: pulse-ring 2s ease-out;
+}
+
+@keyframes pulse-ring {
+  0% {
+    box-shadow: 0 0 0 0 rgba(25, 118, 210, 0.3);
+  }
+  70% {
+    box-shadow: 0 0 0 8px rgba(25, 118, 210, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(25, 118, 210, 0);
+  }
+}
+
+/* Improved empty state styling */
+.designer-grid:empty::before {
+  content: 'ویجت‌ها را از کتابخانه انتخاب کنید';
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 300px;
+  color: rgba(0, 0, 0, 0.3);
+  font-size: 1rem;
+}
+
+/* Better focus states for accessibility */
+.designer-grid .react-grid-item:focus-within {
+  outline: 2px solid rgba(25, 118, 210, 0.5);
+  outline-offset: 2px;
+}
